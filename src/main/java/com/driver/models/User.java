@@ -1,50 +1,46 @@
 package com.driver.models;
 
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "user")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Blog> blogList;
+    private Integer id;
 
     private String firstName;
+
     private String lastName;
+
     private String username;
+
     private String password;
 
-    public User() {
-        // Default constructor needed by JPA
-    }
+    @OneToMany(mappedBy = "user")
+    private List<Blog> blogList = new ArrayList<>();
 
-    public User(String username, String firstName, String lastName, String password) {
-        this.username = username;
+    public User(Integer id, String firstName, String lastName, String username, String password, List<Blog> blogList) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.username = username;
         this.password = password;
-    }
-
-    // Getter and setter methods
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public List<Blog> getBlogList() {
-        return blogList;
-    }
-
-    public void setBlogList(List<Blog> blogList) {
         this.blogList = blogList;
+    }
+
+    public User() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -77,5 +73,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Blog> getBlogList() {
+        return blogList;
+    }
+
+    public void setBlogList(List<Blog> blogList) {
+        this.blogList = blogList;
     }
 }
